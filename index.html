@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-purple-600 to-blue-500 font-sans">
+    <div class="container mx-auto mt-8 max-w-md bg-white bg-opacity-90 rounded-lg shadow-lg p-6">
+        <form id="converterForm" class="space-y-6">
+            <h2 class="text-2xl font-bold text-center text-gray-800">Temperature Converter</h2>
+            <div class="flex space-x-4 items-center">
+                <label for="Degree" class="font-bold text-gray-700">Degree:</label>
+                <input type="number" id="Degree" class="w-1/3 border-2 border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-purple-600" required>
+                <label for="unit" class="font-bold text-gray-700">Type:</label>
+                <select id="unit" class="w-1/3 border-2 border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-purple-600">
+                    <option value="Celsius">Celsius</option>
+                    <option value="Fahrenheit">Fahrenheit</option>
+                    <option value="Kelvin">Kelvin</option>
+                </select>
+            </div>
+            <div class="grid grid-cols-3 gap-4 mt-4">
+                <!-- Buttons for numbers 1 to 9 -->
+                <button type="button" class="bg-gradient-to-r from-green-400 to-blue-400 text-white font-bold rounded-lg p-3 hover:scale-105 transition-transform" onclick="appendNumber(1)">1</button>
+                <button type="button" class="bg-gradient-to-r from-yellow-400 to-red-400 text-white font-bold rounded-lg p-3 hover:scale-105 transition-transform" onclick="appendNumber(2)">2</button>
+                <button type="button" class="bg-gradient-to-r from-pink-400 to-purple-400 text-white font-bold rounded-lg p-3 hover:scale-105 transition-transform" onclick="appendNumber(3)">3</button>
+                <button type="button" class="bg-gradient-to-r from-blue-400 to-green-400 text-white font-bold rounded-lg p-3 hover:scale-105 transition-transform" onclick="appendNumber(4)">4</button>
+                <button type="button" class="bg-gradient-to-r from-red-400 to-yellow-400 text-white font-bold rounded-lg p-3 hover:scale-105 transition-transform" onclick="appendNumber(5)">5</button>
+                <button type="button" class="bg-gradient-to-r from-purple-400 to-pink-400 text-white font-bold rounded-lg p-3 hover:scale-105 transition-transform" onclick="appendNumber(6)">6</button>
+                <button type="button" class="bg-gradient-to-r from-green-400 to-blue-400 text-white font-bold rounded-lg p-3 hover:scale-105 transition-transform" onclick="appendNumber(7)">7</button>
+                <button type="button" class="bg-gradient-to-r from-yellow-400 to-red-400 text-white font-bold rounded-lg p-3 hover:scale-105 transition-transform" onclick="appendNumber(8)">8</button>
+                <button type="button" class="bg-gradient-to-r from-pink-400 to-purple-400 text-white font-bold rounded-lg p-3 hover:scale-105 transition-transform" onclick="appendNumber(9)">9</button>
+            </div>
+            <h3 class="text-lg text-center text-gray-800">Result:</h3>
+            <div id="conversionResult" class="mt-4 text-center text-lg font-bold text-gray-800"></div>
+            <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-bold rounded-lg p-3 hover:scale-105 hover:shadow-lg transition-transform">Convert</button>
+        </form>
+    </div>
+
+    <script>
+        function appendNumber(num) {
+            const degreeInput = document.getElementById('Degree');
+            degreeInput.value = degreeInput.value + num;
+        }
+
+        document.getElementById('converterForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const degree = parseFloat(document.getElementById('Degree').value);
+            const unit = document.getElementById('unit').value;
+            const resultDiv = document.getElementById('conversionResult');
+
+            if (isNaN(degree)) {
+                resultDiv.textContent = "Please enter a valid number.";
+                return;
+            }
+
+            let result = '';
+
+            if (unit === 'Celsius') {
+                const toCelsius = degree - 273.15; 
+                result = `${degree}K = ${toCelsius.toFixed(2)}°C`;
+            } else if (unit === 'Fahrenheit') {
+                const toFahrenheit = (degree * 9/5) + 32; 
+                result = `${degree}°C = ${toFahrenheit.toFixed(2)}°F`;
+            } else if (unit === 'Kelvin') {
+                const toKelvin = degree + 273.15; 
+                result = `${degree}°C = ${toKelvin.toFixed(2)}K`;
+            }
+
+            resultDiv.textContent = result;
+        });
+    </script>
+</body>
+</html>
